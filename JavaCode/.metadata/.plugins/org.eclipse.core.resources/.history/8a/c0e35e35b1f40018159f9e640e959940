@@ -1,0 +1,64 @@
+import java.util.*;
+
+public class lab11_3 {
+
+	public static void main(String[] args) {
+		Scanner kb = new Scanner (System.in);
+		
+		int M = kb.nextInt();
+		int N = kb.nextInt();
+		ArrayList<Logi> s = new ArrayList<>(M);
+		int P = kb.nextInt();
+		
+		
+		for(int i=0;i< M ; i++) {
+			s.add(new Logi(kb.next()));
+		}
+		Graph g = new Graph(M);
+		for(int i=0;i<N;i++) {
+			String a = kb.next();
+			String b = kb.next();
+			int a1 = 0;
+			int b1 = 0;
+			for(int j=0 ;j < s.size();j++) {
+				if(s.get(i).s.equals(a)) {
+					a1=j;
+				}
+				if(s.get(i).s.equals(b)) {
+					b1=j;
+				}
+			}
+			g.addEdge(a1, b1);
+		}
+		for(int i=0;i<P;i++) {
+			int num = kb.nextInt();
+			String s1 = kb.next();
+			String s2 = kb.next();
+			int a1=0;
+			int b1=0;
+			for(int j=0 ;j < s.size();j++) {
+				if(s.get(i).s.equals(s1)) {
+					a1=j;
+				}
+				if(s.get(i).s.equals(s2)) {
+					b1=j;
+				}
+			}
+			BreadthFirstPaths bfp = new BreadthFirstPaths(g,a1);
+			if(bfp.hasPathTo(b1)) {
+				System.out.println(s1+" "+s2+" "+(bfp.distTo(b1)*(num*1128)));
+			}else {
+				System.out.println("NO SHIPMENT POSSIBLE");
+			}
+			
+		}
+
+	}
+
+}
+class Logi{
+  String s;
+  Logi(String s){
+	  this.s = s;
+  }
+}

@@ -1,0 +1,53 @@
+import java.math.BigInteger;
+import java.util.Scanner;
+public class ip {
+	public static BigInteger ipv6ToNumber(String addr) {
+	    int startIndex = addr.indexOf("::");
+	    if (startIndex != -1) {
+	        String firstStr = addr.substring(0, startIndex);
+	        String secondStr = addr.substring(startIndex + 2, addr.length());
+	        BigInteger first = new BigInteger("0");
+	        BigInteger second = new BigInteger("0");
+	        if (!firstStr.equals("")) {
+	            int x = countChar(addr, ':');
+	            first = ipv6ToNumber(firstStr).shiftLeft(16 * (7 - x));
+	        }
+	        if (!secondStr.equals("")) {
+	            second = ipv6ToNumber(secondStr);
+	        }
+	        first = first.add(second);
+	        return first;
+	    }
+
+	    String[] strArr = addr.split(":");
+	    BigInteger retValue = BigInteger.valueOf(0);
+	    for (int i = 0; i < strArr.length; i++) {
+	        BigInteger bi = new BigInteger(strArr[i], 16);
+	        retValue = retValue.shiftLeft(16).add(bi);
+	    }
+	    return retValue;
+	}
+
+	public static int countChar(String str, char reg){
+	    char[] ch=str.toCharArray();
+	    int count=0;
+	    for(int i=0; i<ch.length; ++i){
+	        if(ch[i]==reg){
+	            if(ch[i+1]==reg){
+	                ++i;
+	                break;
+	            }
+	            ++count;
+	        }
+	    }
+	    return count;
+	}
+	
+	public static void main(String[] args){
+		Scanner ss = new Scanner(System.in);
+		String ipString = ss.next();
+		BigInteger asd = ipv6ToNumber(ipString);
+
+	    System.out.println(asd);
+	}
+}

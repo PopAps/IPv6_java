@@ -1,0 +1,74 @@
+import java.util.Scanner;
+
+public class CircularMaze
+{
+	public static void main(String[] args) {
+		Scanner kb = new Scanner(System.in);
+	    int x = kb.nextInt();
+	    int  y = kb.nextInt();
+	    int startX = 0;
+	    int startY = 0;
+	    int endX = 0;
+	    int endY = 0;
+	    String[][] c = new String[x][y];
+	    
+	 
+	    for(int i =0;i< x;i++){
+	    	for(int j=0;j<y;j++) {
+	    		c[i][j] = kb.next();   
+	    	}
+	    }
+	
+	    
+	    for(int i=0;i<x;i++) {
+			for(int j=0;j<y;j++) {
+				if(c[i][j]=="S") {
+					
+					startX = i;
+					startY = j;
+					
+				}
+				if(c[i][j]=="E") {
+					endX = i;
+					endY = j;
+				}
+			}
+			
+		}
+	    System.out.println(startX);
+	  //  solve(c, startX, startY,endX,endY, -1);
+	  
+	    
+	  
+	
+	}
+//	public static boolean solve(String[][] c,int x, int y,int xE, int yE, int d) {
+//		boolean k = false;
+//		  for(int i =0;i<4 && !k ;i++) {
+//		    	if(i != -1) {
+//		    		switch(i) {
+//		    		   case 0: 
+//		    			   if (c[y-1][x] == " ")
+//	                            k = solve (c, x, y- 2,xE,yE, 2);
+//	                        break;
+//		    		   case 1:
+//	                        if (c[y][x+1] == " ")
+//	                            k = solve (c, x + 2, y,xE,yE, 3);
+//	                        break;
+//	                    case 2:
+//	                        if (c[y+1][x] == " ")
+//	                            k = solve(c, x, y + 2,xE,yE, 0);
+//	                        break;
+//	                    case 3:
+//	                        if (c[y][x-1] == " ")
+//	                            k = solve (c, x - 2, y,xE,yE, 1);
+//	                        break;
+//		    		}
+//		    	}
+//		    }
+//		
+//		
+//		return k;
+//	}
+	
+}

@@ -1,0 +1,43 @@
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+import org.apache.commons.net.util.SubnetUtils;
+import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
+
+import com.googlecode.ipv6.IPv6Address;
+import com.googlecode.ipv6.IPv6Network;
+import java.math.BigInteger;
+
+public class Ipv6_Service {
+	
+	public  ArrayList<DataIPv6> Ipv6(String netVal, String ip, String mask) {
+		IPv6Network net = IPv6Network.fromString(netVal);
+		ArrayList<DataIPv6>  arr = new ArrayList<>();
+		
+		String network = net.getFirst().toLongString() + "/" + net.getNetmask().asPrefixLength() ;
+		String boradCast = net.getLast().toLongString();
+		
+		int pefix = net.getNetmask().asPrefixLength();
+		String pefixs = Integer.toString(pefix);
+		
+		String netmask =  net.getNetmask().asAddress().toString();
+       
+        
+		BigInteger numberOfAddresses = new BigInteger("2").pow(128 - net.getNetmask().asPrefixLength());
+		numberOfAddresses = numberOfAddresses.subtract(new BigInteger("2"));
+	    
+		String number = ""+numberOfAddresses;
+		
+		arr.add(new DataIPv6(network,pefixs,number,boradCast));
+	
+        return arr;
+	}
+
+	public byte hexToByte(String s) {
+		byte b = (byte) ((Character.digit(s.charAt(0), 16) << 4) + Character.digit(s.charAt(1), 16));
+		return b;
+	}
+
+}

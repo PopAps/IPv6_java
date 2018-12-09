@@ -1,0 +1,118 @@
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+import org.apache.commons.net.util.SubnetUtils;
+import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
+
+import com.googlecode.ipv6.IPv6Address;
+import com.googlecode.ipv6.IPv6Network;
+import java.math.BigInteger;
+
+public class Ipv6_Service {
+	
+	public  ArrayList<DataIPv6> Ipv6(String netVal, String ip, String mask) {
+		IPv6Network net = IPv6Network.fromString(netVal);
+		ArrayList<DataIPv6>  arr = new ArrayList<>();
+		
+		String network = net.getFirst().toLongString() + "/" + net.getNetmask().asPrefixLength() ;
+		
+		//String output = "IPV6\n";
+
+//		if (net.getNetmask().asPrefixLength() < 127) {
+//			output = output + "First usable IP:\t" + net.getFirst().add(1).toLongString() + "\n";
+//			output = output + "Last usable IP: \t" + net.getLast().add(-1).toLongString() + "\n";
+//		} else {
+//			output = output + "!!Not usable net, choose greater netmask!!\n";
+//		}
+		String boradCast = net.getLast().toLongString();
+		
+		int pefix = net.getNetmask().asPrefixLength();
+		String pefixs = Integer.toString(pefix);
+		
+		String netmask =  net.getNetmask().asAddress().toString();
+        
+		//output = output + "Netmask:        \t" + net.getNetmask().asAddress() + "\n";
+        
+		BigInteger numberOfAddresses = new BigInteger("2").pow(128 - net.getNetmask().asPrefixLength());
+		numberOfAddresses = numberOfAddresses.subtract(new BigInteger("2"));
+		
+       
+		String number = ""+numberOfAddresses;
+		
+		arr.add(new DataIPv6(network,pefixs,number,boradCast));
+		//        if (net.getNetmask().asPrefixLength() < 64) {
+//			output = output + "\nFirst /64 Network: \t" + net.getFirst().toLongString() + "/64\n";
+//
+//			IPv6Network lastnet = IPv6Network.fromString(net.getLast().add(-1).toLongString() + "/64");
+//			output = output + "Last /64 Network:  \t" + lastnet.getFirst().toLongString() + "/64\n";
+//			BigInteger numberOfNetw = new BigInteger("2").pow(64 - net.getNetmask().asPrefixLength());
+//			output = output + "Number of /64 nets:\t" + numberOfNetw + "\n";
+//		}
+//		if (net.getNetmask().asPrefixLength() > 64) {
+//			output = output
+//					+ "\nWarning: For stateless address autoconfiguration (SLAAC) subnets\n      require a /64 address block. See RFC 4291 section 2.5.1.\n";
+//		}
+//		IPv6Address adr = IPv6Address.fromString(ip);
+//		String adrS = adr.toLongString().replace(":", "");
+//		output = output + "\n";
+//		if ((adrS.substring(22, 24).equals("ff")) && (adrS.substring(24, 26).equals("fe"))) {
+//			int b = hexToByte(adrS.substring(16, 18));
+//			b = b ^ 2;
+//			String fs = Integer.toHexString(b);
+//			if (fs.length() == 1) {
+//				fs = "0" + fs;
+//			}
+//
+//			output = output + "EUI-48/MAC address:\t" + fs + ":" + adrS.substring(18, 20) + ":" + adrS.substring(20, 22)
+//					+ ":" + adrS.substring(26, 28) + ":" + adrS.substring(28, 30) + ":" + adrS.substring(30, 32) + "\n";
+//		}
+//		int i, len = adrS.length();
+//		StringBuffer revDNS = new StringBuffer(70);
+//		StringBuffer revf64DNS = new StringBuffer(70);
+//		StringBuffer reve64DNS = new StringBuffer(70);
+//		for (i = (len - 1); i >= 0; i--) {
+//			revDNS.append(adrS.charAt(i));
+//			revDNS.append('.');
+//			if (i < 16) {
+//				revf64DNS.append(adrS.charAt(i));
+//				revf64DNS.append('.');
+//			} else {
+//				reve64DNS.append(adrS.charAt(i));
+//				if (i > 16) {
+//					reve64DNS.append('.');
+//				}
+//			}
+//		}
+//
+//		output = output + "Reverse DNS:     \t" + revDNS.toString() + "ip6.arpa.\n";
+//		output = output + "/64 DNS start:   \t" + revf64DNS.toString() + "ip6.arpa.\n";
+//		output = output + "/64 DNS end:     \t" + reve64DNS.toString() + "\n\n";
+//		if (adr.isIPv4Mapped())
+//			output = output + "The Address is IPv4 mapped.\n";
+//		if (adr.isSiteLocal())
+//			output = output + "The Address is site local.\n";
+//		if (adr.isLinkLocal())
+//			output = output + "The Address is Link local.\n";
+//
+//		if (IPv6Network.fromString("2000::/3").contains(adr))
+//			output = output + "The Address is in global-unicast network.\n";
+//
+//		if (IPv6Network.fromString("2001::/32").contains(adr))
+//			output = output + "Teredo network address.\n";
+//
+//		if (IPv6Network.fromString("2001:db8::/32").contains(adr))
+//			output = output + "Dokumentation address. Do not use in real life.\n";
+//
+//		if (IPv6Network.fromString("64:ff9b::/96").contains(adr))
+//			output = output + "The Address is in NAT64 space. See RFC 6146\n";
+        return arr;
+	}
+
+	public byte hexToByte(String s) {
+		byte b = (byte) ((Character.digit(s.charAt(0), 16) << 4) + Character.digit(s.charAt(1), 16));
+		return b;
+	}
+
+}
